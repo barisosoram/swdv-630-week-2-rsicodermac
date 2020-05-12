@@ -15,20 +15,25 @@ class CheckingAccount:
         return f'{self.name}, {self.address}, Account No: {self.account_num}, Balance: ${self._balance:.2f}'
 
     def withdrawal(self, amount):
-        self._balance -= amount
-        print( f'${amount:.2f} has been subtracted from account. New balance is: ${self._balance:.2f}')
-        return self._balance
+        if self._balance - amount > 0:
+            self._balance -= amount
+            print( f'${amount:.2f} has been subtracted from account. New balance is: ${self._balance:.2f}')
+            return self._balance
+        else:
+            if amount > self._balance:
+                print("\n Insufficient balance  ") 
+    
 
     def deposit(self, amount):
         self._balance += amount
         print (f'${amount:.2f} has been added to account. New balance is: ${self._balance:.2f}')
         return self._balance
 
-
+# Driver application that instantiates a CheckingAccount object and performs a variety of action
 def main(): # ATM Transction
     owner = CheckingAccount('Cash Money', 'The Vault', 'xxx999', 1000)
    
-    print('Welcome!')
+    print("Welcome to the Deposit & Withdrawal ATM Machine!") 
     
     while True:
         # enter command
