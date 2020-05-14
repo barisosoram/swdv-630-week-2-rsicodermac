@@ -9,29 +9,32 @@ class CheckingAccount:
         self.name = name
         self.address = address
         self.account_num = account_num
-        self._balance = balance
+        self.__balance = balance
 
     def __str__(self):
-        return f'{self.name}, {self.address}, Account No: {self.account_num}, Balance: ${self._balance:.2f}'
+        return f'{self.name}, {self.address}, Account No: {self.account_num}, Balance: ${self.__balance:.2f}'
 
     def withdrawal(self, amount):
-        if self._balance - amount > 0:
-            self._balance -= amount
-            print( f'${amount:.2f} has been subtracted from account. New balance is: ${self._balance:.2f}')
-            return self._balance
+        if self.__balance - amount > 0:
+            self.__balance -= amount
+            print( f'${amount:.2f} has been deducted from your account. New balance is: ${self.__balance:.2f}')
+            return self.__balance
         else:
-            if amount > self._balance:
-                print("\n Insufficient balance  ") 
+            if amount > self.__balance:
+                print("\n You do not have sufficient balance to withdraw ") 
     
 
     def deposit(self, amount):
-        self._balance += amount
-        print (f'${amount:.2f} has been added to account. New balance is: ${self._balance:.2f}')
-        return self._balance
+        self.__balance += amount
+        print (f'${amount:.2f} has been deposit to your account. New balance is: ${self.__balance:.2f}')
+        return self.__balance
+    # __balance is private attribute and update only through instance of class. We need to define method that will be called by instance of class.
+    def get_balance(self):
+        return self.__balance
 
 # Driver application that instantiates a CheckingAccount object and performs a variety of action
 def main(): # ATM Transction
-    owner = CheckingAccount('Cash Money', 'The Vault', 'xxx999', 1000)
+    owner = CheckingAccount('Cash Money', 'The ATM', 'xxx543', 2000)
    
     print("Welcome to the Deposit & Withdrawal ATM Machine!") 
     
@@ -42,19 +45,19 @@ def main(): # ATM Transction
         
         # select b, print available balance
         if command == 'b':
-            print(f'Available balance: ${owner._balance:.2f} \n')
+            print('Available balance: ',owner.get_balance() ) # __balance is private attribute and update only through instance of class( in this case Owner)
             
-        # select w, ask withdrawal amount subtract from current balance and print available balance
+          # select w, ask withdrawal amount subtract from current balance and print available balance
         elif command == 'w':
             amount = float(input('How much would you like to withdraw? $'))
             owner.withdrawal(amount)
-            print(f'Available balance: ${owner._balance:.2f} \n')
+            print('Available balance: ',owner.get_balance() )# __balance is private attribute and update only through instance of class( in this case Owner)
             
         # select b, ask deposit amount add to current balance and print available balance
         elif command == 'd':
             amount = float(input('How much would you like to deposit? $'))
             owner.deposit(amount)
-            print(f'Available balance: ${owner._balance:.2f} \n')
+            print('Available balance: ',owner.get_balance() )# __balance is private attribute and update only through instance of class( in this case Owner)
             
         # select e, exit
         elif command == 'e':
